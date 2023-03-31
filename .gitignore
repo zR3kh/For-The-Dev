@@ -1,0 +1,4 @@
+# Ignorer les fichiers IntelliJ
+.idea/
+ForTheDev.iml
+out/
