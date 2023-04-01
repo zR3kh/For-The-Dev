@@ -14,6 +14,8 @@ public abstract class Weapon {
 
     public abstract boolean useWeaponSkill(Hero player, Monster enemy);
 
+    public abstract void inflictDamage(Hero player, Monster enemy);
+
     public abstract boolean isWeaponSkillAvailable();
 
     public String getType() {

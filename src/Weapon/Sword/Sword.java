@@ -22,10 +22,7 @@ public class Sword extends Weapon {
             boolean isAttackSuccessful = player.isAttackSuccessful(hitRating);
             this.setCurrentSkillCooldown(this.getMaxSkillCooldown());
             if (isAttackSuccessful) {
-                int damage = player.getStrength() + this.getDamage() + (player.getLevel() - 1) * 2;
-                enemy.setLife(enemy.getLife() - damage);
-                System.out.println("You perform a powerful slash towards the " + enemy.getName() + " !");
-                System.out.println("It dealt the honest amount of " + damage + " points of damage.");
+                this.inflictDamage(player, enemy);
             } else {
                 player.setLife(player.getLife() - 5);
                 System.out.println("You tripped on your sword, hurting yourself for " + 5 + " damages.");
@@ -33,9 +30,16 @@ public class Sword extends Weapon {
             return true;
         }
         else {
-            System.out.println("You cannot use this ability until " + this.getCurrentSkillCooldown() + " turn.");
             return false;
         }
+    }
+
+    @Override
+    public void inflictDamage(Hero player, Monster enemy) {
+        int damage = player.getStrength() + this.getDamage() + (player.getLevel() - 1) * 2;
+        enemy.setLife(enemy.getLife() - damage);
+        System.out.println("You perform a powerful slash towards the " + enemy.getName() + " !");
+        System.out.println("It dealt the honest amount of " + damage + " points of damage.");
     }
 
     @Override

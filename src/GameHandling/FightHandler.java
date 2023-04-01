@@ -20,7 +20,11 @@ public class FightHandler implements IFightHandler {
         System.out.println("What do you want to do ?");
         System.out.println("1. Attack");
         if (player.getWeapon() != null) {
-            System.out.println("2. Use your weapon skill");
+            if (player.getWeapon().isWeaponSkillAvailable()) {
+                System.out.println("2. " + player.getWeapon().getSkillName());
+            } else {
+                System.out.println("2. " + player.getWeapon().getSkillName() + " : " + player.getWeapon().getCurrentSkillCooldown() + " turns remaining.");
+            }
         }
     }
 
@@ -37,15 +41,10 @@ public class FightHandler implements IFightHandler {
                 int userChoice = scanner.nextInt();
                 switch (userChoice) {
                     case 1:
-                        player.attack(enemy);
-                        validInput = true;
+                        validInput = player.attack(enemy);
                         break;
                     case 2:
-                        if (player.getWeapon().useWeaponSkill(player, enemy)) {
-                            validInput = true;
-                        } else {
-                            validInput = false;
-                        }
+                        validInput = player.getWeapon().useWeaponSkill(player, enemy);
                         break;
                     default:
                         break;

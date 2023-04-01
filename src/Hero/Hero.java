@@ -81,7 +81,7 @@ public class Hero {
      *
      * @param enemy
      */
-    public void attack(Monster enemy) {
+    public boolean attack(Monster enemy) {
         int hitRating = this.calculateHitRating(enemy);
         boolean isAttackSuccess = isAttackSuccessful(hitRating);
         if (isAttackSuccess) {
@@ -90,6 +90,7 @@ public class Hero {
         } else {
             System.out.println(this.getName() + " tries his best but fail miserably.");
         }
+        return true;
     }
 
     public String getName() {
