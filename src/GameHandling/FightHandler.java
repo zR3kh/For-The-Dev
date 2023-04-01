@@ -74,7 +74,8 @@ public class FightHandler implements IFightHandler {
      */
     public void fightTermination(Hero player, Monster enemy, Scanner scanner) {
         if (player.getLife() > 0) {
-            System.out.println("Death of the " + enemy.getName() + " gives you " + enemy.getXpGain() + " experience.");
+            System.out.println("Death of the " + enemy.getName() + " gives you " + enemy.getXpGain() + " experience and " + enemy.getGoldGain() + " golds.");
+            player.setGold(player.getGold() + enemy.getGoldGain());
             player.setCurrentXp(player.getCurrentXp() + enemy.getXpGain());
             if (player.getCurrentXp() >= player.getToNextLevel()) {
                 this.iHeroHandler.levelUp(player, scanner);

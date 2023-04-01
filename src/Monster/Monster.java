@@ -14,6 +14,7 @@ public class Monster {
     public int strength;
     public int speed;
     public int xpGain;
+    public int goldGain;
 
     public SharedDataSingleton sharedDataSingleton;
     public Hero player;
@@ -86,5 +87,13 @@ public class Monster {
 
     public void setLevel(int level) {
         this.level = level;
+    }
+
+    public int getGoldGain() {
+        return goldGain;
+    }
+
+    public void setGoldGain(int goldGain) {
+        this.goldGain = goldGain;
     }
 }
