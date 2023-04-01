@@ -1,14 +1,14 @@
-package Weapon.Sword;
+package Weapon.Staff;
 
 import Hero.Hero;
 import Monster.Monster;
 import Weapon.Weapon;
 
-public class Sword extends Weapon {
+public class Staff extends Weapon {
 
-    public Sword() {
-        super("Sword", 4, 10, "Slash");
-        this.maxSkillCooldown = 4;
+    public Staff() {
+        super("Staff", 2, 4, "Fireball");
+        this.maxSkillCooldown = 2;
     }
 
     @Override
@@ -20,8 +20,7 @@ public class Sword extends Weapon {
             if (isAttackSuccessful) {
                 this.inflictDamageOnSkill(player, enemy);
             } else {
-                player.setLife(player.getLife() - 5);
-                System.out.println("You tripped on your sword, hurting yourself for " + 5 + " damages.");
+                System.out.println("Oops, wrong formula.");
             }
             return true;
         }
@@ -30,21 +29,22 @@ public class Sword extends Weapon {
         }
     }
 
+
     @Override
     public void inflictDamageOnSkill(Hero player, Monster enemy) {
         int damage = this.getSkillDamage(player);
         enemy.setLife(enemy.getLife() - damage);
-        System.out.println("You perform a powerful slash towards the " + enemy.getName() + " !");
-        System.out.println("It dealt the honest amount of " + damage + " points of damage.");
+        System.out.println("You hurls a burning fireball on the " + enemy.getName() + " !");
+        System.out.println("It dealt the moderate amount of " + damage + " points of damage.");
     }
 
     @Override
     public int getSkillDamage(Hero player) {
-        return player.getStrength() + this.getDamage() + (player.getLevel() - 1) * 2;
+        return (player.getIntelligence()) / 2 + this.getDamage() + (player.getLevel() - 1) * 2;
     }
 
     @Override
     public int getAttackDamage(Hero player) {
-        return player.getStrength() + this.getDamage();
+        return (player.getIntelligence()) / 2 + this.getDamage();
     }
 }

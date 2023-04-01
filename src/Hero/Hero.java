@@ -56,11 +56,17 @@ public class Hero {
 
     /**
      * Calculate the amount of damage dealt
+     * Check if the player have a weapon to add up
      *
      * @param enemy
      */
     public void inflictDamage(Monster enemy) {
-        int damage = this.getStrength();
+        int damage;
+        if (this.getWeapon() != null) {
+            damage = this.getWeapon().getAttackDamage(this);
+        } else {
+            damage = this.getStrength();
+        }
         enemy.setLife(enemy.getLife() - damage);
         System.out.println(this.getName() + " hit the " + enemy.getName() + " for " + damage + " damages !");
     }
