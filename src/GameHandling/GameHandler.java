@@ -6,6 +6,7 @@ import Monster.Monster;
 import MonsterFactory.MonsterFactory;
 import Town.Town;
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -14,6 +15,10 @@ public class GameHandler {
     public int[][] worldMap;
     public int playerCoordX;
     public int playerCoordY;
+    public final int goNorth = 1;
+    public final int goSouth = 2;
+    public final int goWest = 3;
+    public final int goEast = 4;
     public IFightHandler iFightHandler;
     public SharedDataSingleton sharedDataSingleton;
     public Hero player;
@@ -55,24 +60,56 @@ public class GameHandler {
     }
 
     /**
-     * Move the player on the map
-     * Update his coordinates
+     * Get all the possible directions before moving the hero
+     * @return
      */
-    public void movePlayer() {
-        System.out.println("Where do you want to go ?");
+    public ArrayList<Integer> getPossibleDirections() {
+        ArrayList<Integer> directions = new ArrayList<>();
         if (this.playerCoordX > 0) {
             System.out.println("1. North");
+            directions.add(this.goNorth);
         }
         if (this.playerCoordX < this.worldMap.length - 1) {
             System.out.println("2. South");
+            directions.add(this.goSouth);
         }
         if (this.playerCoordY > 0) {
             System.out.println("3. West");
+            directions.add(this.goWest);
         }
         if (this.playerCoordY < this.worldMap[this.playerCoordX].length - 1) {
             System.out.println("4. East");
+            directions.add(this.goEast);
         }
-        int userChoice = this.scanner.nextInt();
+        return directions;
+    }
+
+    public int handleUserInput() {
+        ArrayList<Integer> directions = this.getPossibleDirections();
+        int userChoice = -1;
+        do {
+            if (!this.scanner.hasNextInt()) {
+                System.out.println("This is not a valid direction.");
+                this.scanner.next();
+            } else {
+                if (!directions.contains(userChoice)) {
+                    System.out.println("There is nothing to explore here.");
+                    this.scanner.next();
+                }
+            }
+            userChoice = this.scanner.nextInt();
+        } while (!directions.contains(userChoice));
+        return userChoice;
+    }
+
+    /**
+     * Move the player on the map
+     * Update his coordinates
+     * Launch the associated event
+     */
+    public void movePlayer() {
+        System.out.println("Where do you want to go ?");
+        int userChoice = this.handleUserInput();
         switch (userChoice) {
             case 1:
                 this.playerCoordX--;
