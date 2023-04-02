@@ -24,7 +24,6 @@ public class Hero {
 
     /**
      * Hero Constructor
-     *
      * @param name
      */
     public Hero(String name) {
@@ -34,7 +33,6 @@ public class Hero {
 
     /**
      * Calculate Hit Rating for the attack
-     *
      * @param enemy
      * @return
      */
@@ -45,7 +43,6 @@ public class Hero {
 
     /**
      * Determine if the attack lands or not
-     *
      * @param hitRating
      * @return
      */
@@ -57,7 +54,6 @@ public class Hero {
     /**
      * Calculate the amount of damage dealt
      * Check if the player have a weapon to add up
-     *
      * @param enemy
      */
     public void inflictDamage(Monster enemy) {
@@ -73,7 +69,6 @@ public class Hero {
 
     /**
      * Check if the enemy is dead after landing a strike
-     *
      * @param enemy
      */
     public void isEnemyDead(Monster enemy) {
@@ -84,7 +79,6 @@ public class Hero {
 
     /**
      * Basic attack of the player
-     *
      * @param enemy
      */
     public boolean attack(Monster enemy) {
@@ -97,6 +91,15 @@ public class Hero {
             System.out.println(this.getName() + " tries his best but fail miserably.");
         }
         return true;
+    }
+
+    /**
+     * Check if the player have enough gold to buy something
+     * @param gold
+     * @return
+     */
+    public boolean havePlayerEnoughGold(int gold) {
+        return this.getGold() - gold >= 0;
     }
 
     public String getName() {
