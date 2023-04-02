@@ -183,13 +183,17 @@ public class GameHandler {
         while (!quit) {
             System.out.println("What do you want to do ?");
             System.out.println("1. Visit the Priest");
-            System.out.println("2. Leave the town");
+            System.out.println("2. Visit the Merchant");
+            System.out.println("3. Leave the town");
             int userChoice = this.scanner.nextInt();
             switch (userChoice) {
                 case 1:
-                    Town.visitPriest(this.player, this.scanner);
+                    Town.visitPriest(this.player);
                     break;
                 case 2:
+                    Town.visitMerchant(this.player);
+                    break;
+                case 3:
                     System.out.println("You leave the town.");
                     quit = true;
                     break;
