@@ -61,6 +61,7 @@ public class GameHandler {
 
     /**
      * Get all the possible directions before moving the hero
+     *
      * @return
      */
     public ArrayList<Integer> getPossibleDirections() {
@@ -84,20 +85,24 @@ public class GameHandler {
         return directions;
     }
 
+    /**
+     * Process user input
+     * 
+     * @return
+     */
     public int handleUserInput() {
         ArrayList<Integer> directions = this.getPossibleDirections();
         int userChoice = -1;
         do {
-            if (!this.scanner.hasNextInt()) {
-                System.out.println("This is not a valid direction.");
-                this.scanner.next();
-            } else {
+            if (this.scanner.hasNextInt()) {
+                userChoice = this.scanner.nextInt();
                 if (!directions.contains(userChoice)) {
                     System.out.println("There is nothing to explore here.");
-                    this.scanner.next();
                 }
+            } else {
+                System.out.println("This is not a valid direction.");
+                this.scanner.next();
             }
-            userChoice = this.scanner.nextInt();
         } while (!directions.contains(userChoice));
         return userChoice;
     }
