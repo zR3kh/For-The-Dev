@@ -46,4 +46,11 @@ public class TownDialogs {
         System.out.println("3. Leave the store");
         return UserInputHandler.getUserInput(MERCHANT_DIALOG_WEAPONS);
     }
+
+    /**
+     * Player don't have enough gold
+     */
+    public static void tooPoor() {
+        System.out.println("You don't have enough gold to buy that.");
+    }
 }

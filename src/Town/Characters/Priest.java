@@ -20,7 +20,7 @@ public class Priest implements ICharacter {
                     player.setEnergy(player.getMaxEnergy());
                     System.out.println("You feel revived. Life and energy fully restored.");
                 } else {
-                    System.out.println("You don't have enough gold.");
+                    TownDialogs.tooPoor();
                 }
                 break;
             case 2:

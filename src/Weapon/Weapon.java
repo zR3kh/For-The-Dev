@@ -5,20 +5,31 @@ import Monster.Monster;
 
 public abstract class Weapon {
 
-    public Weapon(String type, int damage, int accuracy, String skillName) {
+    public String name;
+    public String type;
+    public String skillName;
+    public int damage;
+    public int accuracy;
+    public int currentSkillCooldown;
+    public int maxSkillCooldown;
+
+    public Weapon(String type, String skillName, int accuracy, int maxSkillCooldown) {
         this.type = type;
-        this.damage = damage;
-        this.accuracy = accuracy;
         this.skillName = skillName;
+        this.accuracy = accuracy;
+        this.maxSkillCooldown = maxSkillCooldown;
         this.currentSkillCooldown = 0;
     }
 
-    public final String type;
-    public final int damage;
-    public final int accuracy;
-    public final String skillName;
-    public int currentSkillCooldown;
-    public int maxSkillCooldown;
+    /**
+     * Check if player can execute his weapon skill
+     * @return
+     */
+    public boolean isWeaponSkillAvailable() {
+        return this.currentSkillCooldown == 0;
+    }
+
+    public abstract int calculateWeaponSkillAccuracy(Hero player, Monster enemy);
 
     public abstract boolean useWeaponSkill(Hero player, Monster enemy);
 
@@ -27,18 +38,6 @@ public abstract class Weapon {
     public abstract int getSkillDamage(Hero player);
 
     public abstract int getAttackDamage(Hero player);
-
-    public boolean isWeaponSkillAvailable() {
-        return this.currentSkillCooldown == 0;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public int getDamage() {
-        return damage;
-    }
 
     public int getAccuracy() {
         return accuracy;
@@ -62,5 +61,9 @@ public abstract class Weapon {
 
     public void setMaxSkillCooldown(int maxSkillCooldown) {
         this.maxSkillCooldown = maxSkillCooldown;
+    }
+
+    public int getDamage() {
+        return damage;
     }
 }
