@@ -4,6 +4,8 @@ import Hero.Hero;
 import Monster.Monster;
 import Weapon.Weapon;
 
+import java.util.Random;
+
 public abstract class Sword extends Weapon {
 
     public Sword(String name, int damage) {
@@ -12,22 +14,13 @@ public abstract class Sword extends Weapon {
         this.damage = damage;
     }
 
-    /**
-     * Functional method for weapon skill use
-     * @param player
-     * @param enemy
-     * @return
-     */
     @Override
     public boolean useWeaponSkill(Hero player, Monster enemy) {
         if (isWeaponSkillAvailable()) {
-            int accuracy = this.calculateWeaponSkillAccuracy(player, enemy);
-            boolean isAttackSuccessful = player.isAttackSuccessful(accuracy);
-            if (isAttackSuccessful) {
+            if (this.isAttackSuccessful(player, enemy)) {
                 this.inflictDamageOnSkill(player, enemy);
             } else {
-                player.setLife(player.getLife() - 5);
-                System.out.println("You tripped on your sword, hurting yourself for " + 5 + " damages.");
+                this.failWeaponSkill(player);
             }
             this.setCurrentSkillCooldown(this.getMaxSkillCooldown());
             return true;
@@ -37,22 +30,13 @@ public abstract class Sword extends Weapon {
         }
     }
 
-    /**
-     * Calculate chances to hit with weapon skill
-     * @param player
-     * @param enemy
-     * @return
-     */
     @Override
-    public int calculateWeaponSkillAccuracy(Hero player, Monster enemy) {
-        return player.calculateHitRating(enemy) - this.getAccuracy();
+    public boolean isAttackSuccessful(Hero player, Monster enemy) {
+        int hitRating = this.calculateWeaponSkillAccuracy(player, enemy);
+        int rdnNumber = new Random().nextInt(100);
+        return rdnNumber <= hitRating;
     }
 
-    /**
-     * Deal damage on enemy with weapon skill
-     * @param player
-     * @param enemy
-     */
     @Override
     public void inflictDamageOnSkill(Hero player, Monster enemy) {
         int damage = this.getSkillDamage(player);
@@ -61,21 +45,22 @@ public abstract class Sword extends Weapon {
         System.out.println("It dealt the honest amount of " + damage + " points of damage.");
     }
 
-    /**
-     * Calculate weapon skill damage
-     * @param player
-     * @return
-     */
+    @Override
+    public void failWeaponSkill(Hero player) {
+        player.setLife(player.getLife() - 5);
+        System.out.println("You tripped on your sword, hurting yourself for " + 5 + " damages.");
+    }
+
+    @Override
+    public int calculateWeaponSkillAccuracy(Hero player, Monster enemy) {
+        return player.calculateHitRating(enemy) - this.getAccuracy();
+    }
+
     @Override
     public int getSkillDamage(Hero player) {
         return player.getStrength() + this.getDamage() + (player.getLevel() - 1) * 2;
     }
 
-    /**
-     * Calculate weapon attack damage
-     * @param player
-     * @return
-     */
     @Override
     public int getAttackDamage(Hero player) {
         return player.getStrength() + this.getDamage();

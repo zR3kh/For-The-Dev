@@ -29,14 +29,55 @@ public abstract class Weapon {
         return this.currentSkillCooldown == 0;
     }
 
-    public abstract int calculateWeaponSkillAccuracy(Hero player, Monster enemy);
-
+    /**
+     * Functional method for weapon skill use
+     * @param player
+     * @param enemy
+     * @return
+     */
     public abstract boolean useWeaponSkill(Hero player, Monster enemy);
 
+    /**
+     * Check if the weapon skill is a success or not
+     * @param player
+     * @param enemy
+     * @return
+     */
+    public abstract boolean isAttackSuccessful(Hero player, Monster enemy);
+
+    /**
+     * Deal damage on enemy with weapon skill
+     * @param player
+     * @param enemy
+     */
     public abstract void inflictDamageOnSkill(Hero player, Monster enemy);
 
+    /**
+     * Miss weapon skill
+     * @param player
+     */
+    public abstract void failWeaponSkill(Hero player);
+
+    /**
+     * Calculate chances to hit with weapon skill
+     * @param player
+     * @param enemy
+     * @return
+     */
+    public abstract int calculateWeaponSkillAccuracy(Hero player, Monster enemy);
+
+    /**
+     * Calculate weapon skill damage
+     * @param player
+     * @return
+     */
     public abstract int getSkillDamage(Hero player);
 
+    /**
+     * Calculate weapon attack damage
+     * @param player
+     * @return
+     */
     public abstract int getAttackDamage(Hero player);
 
     public int getAccuracy() {
