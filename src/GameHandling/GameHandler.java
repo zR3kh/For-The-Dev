@@ -1,12 +1,15 @@
 package GameHandling;
 
 import Hero.Hero;
+import Hero.Mage.Mage;
+import Hero.Rogue.Rogue;
 import Hero.Warrior.Warrior;
 import Monster.Monster;
 import MonsterFactory.MonsterFactory;
 import Town.Town;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -24,9 +27,6 @@ public class GameHandler {
     public Hero player;
     public Scanner scanner;
 
-    /**
-     * Constructor
-     */
     public GameHandler() {
         this.player = new Warrior("Rekh");
         this.scanner = new Scanner(System.in);
@@ -38,11 +38,30 @@ public class GameHandler {
         this.gameIntroduction();
     }
 
-    /**
-     * Generate map and moves player until he dies
-     */
     public void gameIntroduction() {
-        System.out.println("Welcome to For the Dev.");
+        ReadFileHandler.dialogueIntro();
+        ReadFileHandler.characterChoice();
+        int classChoice = UserInputHandler.getUserIntInput(new ArrayList(Arrays.asList(1, 2, 3)));
+        ReadFileHandler.nameChoice();
+        String playerName = UserInputHandler.getUserStringInput();
+        this.runGame(classChoice, playerName);
+    }
+
+    /**
+     * Generate maps & run game
+     */
+    public void runGame(int classChoice, String playerName) {
+        switch (classChoice) {
+            case 1:
+                this.player = new Warrior(playerName);
+                break;
+            case 2:
+                this.player = new Mage(playerName);
+                break;
+            case 3:
+                this.player = new Rogue(playerName);
+                break;
+        }
         this.generateMaps();
         while (this.player.getLife() > 0) {
             movePlayer();

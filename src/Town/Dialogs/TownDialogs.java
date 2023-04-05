@@ -21,7 +21,7 @@ public class TownDialogs {
         System.out.println("Accept the offer ?");
         System.out.println("1. Yes");
         System.out.println("2. No");
-        return UserInputHandler.getUserInput(PRIEST_DIALOG_GLOBAL);
+        return UserInputHandler.getUserIntInput(PRIEST_DIALOG_GLOBAL);
     }
 
     /**
@@ -33,7 +33,7 @@ public class TownDialogs {
         System.out.println("Wanna give it a try ?");
         System.out.println("1. Yes");
         System.out.println("2. No");
-        return UserInputHandler.getUserInput(MERCHANT_DIALOG_GLOBAL);
+        return UserInputHandler.getUserIntInput(MERCHANT_DIALOG_GLOBAL);
     }
 
     /**
@@ -44,7 +44,7 @@ public class TownDialogs {
         System.out.println("1. Sword - 10 Golds");
         System.out.println("2. Staff - 10 Golds");
         System.out.println("3. Leave the store");
-        return UserInputHandler.getUserInput(MERCHANT_DIALOG_WEAPONS);
+        return UserInputHandler.getUserIntInput(MERCHANT_DIALOG_WEAPONS);
     }
 
     /**

@@ -20,12 +20,12 @@ public class Merchant implements ICharacter {
                 switch (userChoice) {
                     case 1:
                         player.setGold(player.getGold() - 10);
-                        player.setWeapon(new Sword());
+                       // player.setWeapon(new Sword());
                         System.out.println("You bought a Sword.");
                         break;
                     case 2:
                         player.setGold(player.getGold() - 10);
-                        player.setWeapon(new Staff());
+                   //     player.setWeapon(new Staff());
                         System.out.println("You bought a Staff.");
                         break;
                     case 3:

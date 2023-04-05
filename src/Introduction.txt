@@ -1,0 +1,16 @@
+##INTROSTART
+Welcome to For The Dev.
+You're here in a universe quite little at the moment, mais who will expand with time, and your goal
+is to vanquish the black mage lord of the Kazakdoum Forest. This character is not yet implemented but soontm.
+##INTROEND
+
+##CLASSSTART
+Now talk me about you : are you a proud warrior, a wise mage or a smart rogue ?
+1. Warrior
+2. Mage
+3. Rogue
+##CLASSEND
+
+##NAMESTART
+Very well. Now, how should you be named ?
+##NAMEEND

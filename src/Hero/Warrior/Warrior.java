@@ -1,7 +1,6 @@
 package Hero.Warrior;
 
 import Hero.Hero;
-import Weapon.Sword.Sword;
 
 public class Warrior extends Hero {
 
@@ -14,6 +13,5 @@ public class Warrior extends Hero {
         this.strength = 10;
         this.intelligence = 5;
         this.speed = 5;
-        this.weapon = new Sword();
     }
 }

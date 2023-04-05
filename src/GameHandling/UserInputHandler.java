@@ -7,7 +7,12 @@ public class UserInputHandler {
 
     public static Scanner scanner = new Scanner(System.in);
 
-    public static int getUserInput(ArrayList validInputsList) {
+    /**
+     * Handle user input when it should be int
+     * @param validInputsList
+     * @return
+     */
+    public static int getUserIntInput(ArrayList validInputsList) {
         int userChoice = -1;
         do {
             if (scanner.hasNextInt()) {
@@ -21,6 +26,24 @@ public class UserInputHandler {
                 scanner.next();
             }
         } while (!validInputsList.contains(userChoice));
+        return userChoice;
+    }
+
+    /**
+     * Handle user input when it should be a String
+     * @return
+     */
+    public static String getUserStringInput() {
+        String userChoice = "";
+        do {
+            if (scanner.hasNextInt()) {
+                System.out.println("This is not a valid action, sir.");
+                scanner.next();
+            } else {
+                userChoice = scanner.nextLine();
+            }
+        } while (scanner.hasNextLine());
+
         return userChoice;
     }
 }
