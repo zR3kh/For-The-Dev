@@ -96,12 +96,19 @@ public class GameHandler {
         }
     }
 
+    /**
+     * Display game menu
+     */
     public void gameMenu() {
         System.out.println("1. Show Map");
-        int playerChoice = UserInputHandler.getUserIntInput(new ArrayList<>(Arrays.asList(1)));
+        System.out.println("2. Show Stats");
+        int playerChoice = UserInputHandler.getUserIntInput(new ArrayList<>(Arrays.asList(1, 2)));
         switch (playerChoice) {
             case 1:
                 this.showMapToPlayer();
+                break;
+            case 2:
+                this.showStatsToPlayer();
                 break;
         }
     }
@@ -174,6 +181,19 @@ public class GameHandler {
             sb.append("\n");
         }
         System.out.println(sb);
+    }
+
+    /**
+     * Show stats to player
+     */
+    public void showStatsToPlayer() {
+        System.out.println("Level : " + this.player.getLevel());
+        System.out.println("Life : " + this.player.getLife() + " / " + this.player.getMaxLife());
+        System.out.println("Energy : " + this.player.getEnergy() + " / " + this.player.getMaxEnergy());
+        System.out.println("Strength : " + this.player.getStrength());
+        System.out.println("Intelligence : " + this.player.getIntelligence());
+        System.out.println("Speed : " + this.player.getSpeed());
+        System.out.println("Golds : " + this.player.getGold());
     }
 
     /**
