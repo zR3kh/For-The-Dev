@@ -4,6 +4,7 @@ import Hero.Hero;
 import Hero.Mage.Mage;
 import Hero.Rogue.Rogue;
 import Hero.Warrior.Warrior;
+import Monster.BlackLord.BlackLord;
 import Monster.Monster;
 import MonsterFactory.MonsterFactory;
 import Town.Town;
@@ -73,7 +74,7 @@ public class GameHandler {
      * Set the starting coordinates of the player
      */
     public void generateMaps() {
-        this.worldMap = new int[][]{{1, 1, 1, 1}, {1, 1, 1, 1}, {1, 1, 2, 1}, {1, 1, 1, 1}};
+        this.worldMap = new int[][]{{1, 1, 1, 4}, {1, 1, 1, 1}, {1, 1, 1, 1}, {1, 1, 2, 1}, {1, 1, 1, 1}};
         this.playerCoordX = 3;
         this.playerCoordY = 2;
     }
@@ -168,14 +169,20 @@ public class GameHandler {
      * Show map to player
      */
     public void showMapToPlayer() {
-        System.out.println("You're actually here :\n");
+        System.out.println("O -> You / X -> Unknown / T -> Town / C -> Cleared");
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < this.worldMap.length; i++) {
             for (int j = 0; j < this.worldMap[i].length; j++) {
                 if (i == this.playerCoordX && j == this.playerCoordY) {
                     sb.append(" O ");
                 } else {
-                    sb.append(" X ");
+                    if (this.worldMap[i][j] == 1 || this.worldMap[i][j] == 4) {
+                        sb.append(" X ");
+                    } else if (this.worldMap[i][j] == 2) {
+                        sb.append(" T ");
+                    } else if (this.worldMap[i][j] == -1) {
+                        sb.append(" C ");
+                    }
                 }
             }
             sb.append("\n");
@@ -211,6 +218,9 @@ public class GameHandler {
             case 2:
                 n2Event();
                 break;
+            case 4:
+                n4Event();
+                break;
         }
     }
 
@@ -220,7 +230,7 @@ public class GameHandler {
      */
     public void n1Event() {
         int rdnNumber = new Random().nextInt(10);
-        if (rdnNumber > 0) {
+        if (rdnNumber > 3) {
             Monster enemy = MonsterFactory.generateMonster();
             this.iFightHandler.fightProcess(this.player, enemy);
             this.worldMap[this.playerCoordX][this.playerCoordY] = -1;
@@ -263,5 +273,13 @@ public class GameHandler {
                     break;
             }
         }
+    }
+
+    public void n4Event() {
+        System.out.println("Oh, looks like it's the big boss you need to defeat in order to complete this game.");
+        System.out.println("Good luck !");
+        Monster enemy = new BlackLord();
+        this.iFightHandler.fightProcess(this.player, enemy);
+        this.worldMap[this.playerCoordX][this.playerCoordY] = -1;
     }
 }

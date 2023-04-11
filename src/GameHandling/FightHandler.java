@@ -1,9 +1,11 @@
 package GameHandling;
 
 import Hero.Hero;
+import Monster.BlackLord.BlackLord;
 import Monster.Monster;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class FightHandler implements IFightHandler {
 
@@ -45,7 +47,12 @@ public class FightHandler implements IFightHandler {
      */
     @Override
     public void fightProcess(Hero player, Monster enemy) {
-        System.out.println("You encounter a savage " + enemy.getName() + " !");
+        if (!(enemy instanceof BlackLord)) {
+            System.out.println("You encounter a savage " + enemy.getName() + " !");
+        } else {
+            System.out.println("Black Lord : 'Looks about you've come to and end...'");
+            System.out.println("Black Lord : 'This place is MINE ! Prepare to SUFFER !!");
+        }
         while (player.getLife() > 0 && enemy.getLife() > 0) {
             boolean validInput = false;
             while (!validInput) {
@@ -63,9 +70,25 @@ public class FightHandler implements IFightHandler {
             }
 
             this.decreaseCooldowns(player);
-            if (enemy.getLife() > 0) {
-                enemy.attack(player);
+            if (!(enemy instanceof BlackLord)) {
+                if (enemy.getLife() > 0) {
+                    enemy.attack(player);
+                }
+            } else {
+                int rdnNumber = new Random().nextInt(10);
+                if (enemy.getLife() > 0) {
+                   /* if (rdnNumber > 4 && enemy.getWeapon().isWeaponSkillAvailable()) {
+                        System.out.println("YOUR SOUL SHALL BURN !");
+                        enemy.getWeapon().useWeaponSkill(player, enemy);
+                    } else {
+                        enemy.attack(player);
+                    }*/
+                    System.out.println("DIE, INSECT !");
+                    enemy.attack(player);
+
+                }
             }
+
         }
         this.fightTermination(player, enemy);
     }

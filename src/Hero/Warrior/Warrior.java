@@ -6,12 +6,12 @@ public class Warrior extends Hero {
 
     public Warrior(String name) {
         super(name);
-        this.life = 30;
-        this.maxLife = 30;
+        this.life = 40;
+        this.maxLife = 40;
         this.energy = 10;
         this.maxEnergy = 10;
-        this.strength = 10;
+        this.strength = 12;
         this.intelligence = 5;
-        this.speed = 5;
+        this.speed = 6;
     }
 }

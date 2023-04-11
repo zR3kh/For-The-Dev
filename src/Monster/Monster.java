@@ -2,6 +2,7 @@ package Monster;
 
 import GameHandling.SharedDataSingleton;
 import Hero.Hero;
+import Weapon.Weapon;
 
 import java.util.Random;
 
@@ -14,6 +15,7 @@ public class Monster {
     public int strength;
     public int speed;
     public int xpGain;
+    public Weapon weapon;
     public int goldGain;
 
     public SharedDataSingleton sharedDataSingleton;
@@ -97,4 +99,13 @@ public class Monster {
     public void setGoldGain(int goldGain) {
         this.goldGain = goldGain;
     }
+
+    public Weapon getWeapon() {
+        return weapon;
+    }
+
+    public void setWeapon(Weapon weapon) {
+        this.weapon = weapon;
+    }
+
 }

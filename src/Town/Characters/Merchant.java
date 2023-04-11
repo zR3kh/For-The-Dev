@@ -32,12 +32,12 @@ public class Merchant implements ICharacter {
                     case 1:
                         player.setGold(player.getGold() - this.weaponPrice);
                         player.setWeapon(this.sword);
-                        System.out.println("You bought a " + this.sword.getName());
+                        System.out.println("You bought a " + this.sword.getName() + ".");
                         break;
                     case 2:
                         player.setGold(player.getGold() - this.weaponPrice);
                         player.setWeapon(this.staff);
-                        System.out.println("You bought a " + this.staff.getName());
+                        System.out.println("You bought a " + this.staff.getName() + ".");
                         break;
                     case 3:
                         break;
