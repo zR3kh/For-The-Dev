@@ -2,7 +2,8 @@ package GameHandling;
 
 import Hero.Hero;
 
-import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class HeroHandler implements IHeroHandler {
 
@@ -10,7 +11,7 @@ public class HeroHandler implements IHeroHandler {
      * Handle the level-up of the player
      */
     @Override
-    public void levelUp(Hero player, Scanner scanner) {
+    public void levelUp(Hero player) {
         while (player.getToNextLevel() <= player.getCurrentXp()) {
             player.setCurrentXp(player.getCurrentXp() - player.getToNextLevel());
             player.setToNextLevel(player.getToNextLevel() + 10);
@@ -25,7 +26,7 @@ public class HeroHandler implements IHeroHandler {
         System.out.println("4. Intelligence");
         System.out.println("5. Speed");
         while (player.getAttrPtsOnLevelUp() > 0) {
-            int userChoice = scanner.nextInt();
+            int userChoice = UserInputHandler.getUserIntInput(new ArrayList(Arrays.asList(1,2,3,4,5)));
             switch (userChoice) {
                 case 1:
                     player.setMaxLife(player.getMaxLife() + 1);

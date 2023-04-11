@@ -11,7 +11,6 @@ import Town.Town;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
-import java.util.Scanner;
 
 public class GameHandler {
 
@@ -25,19 +24,16 @@ public class GameHandler {
     public IFightHandler iFightHandler;
     public SharedDataSingleton sharedDataSingleton;
     public Hero player;
-    public Scanner scanner;
 
     public GameHandler() {
-        this.player = new Warrior("Rekh");
-        this.scanner = new Scanner(System.in);
         this.sharedDataSingleton = SharedDataSingleton.getInstance();
-        this.sharedDataSingleton.initSharedDataSingleton(player, scanner);
-        this.player = this.sharedDataSingleton.getPlayer();
-        this.scanner = this.sharedDataSingleton.getScanner();
         this.iFightHandler = new FightHandler();
         this.gameIntroduction();
     }
 
+    /**
+     * Beginning ! Read introduction, choose class & name
+     */
     public void gameIntroduction() {
         ReadFileHandler.dialogueIntro();
         ReadFileHandler.characterChoice();
@@ -48,7 +44,7 @@ public class GameHandler {
     }
 
     /**
-     * Generate maps & run game
+     * Initiate the player and start the game
      */
     public void runGame(int classChoice, String playerName) {
         switch (classChoice) {
@@ -61,10 +57,14 @@ public class GameHandler {
             case 3:
                 this.player = new Rogue(playerName);
                 break;
+            default:
+                break;
         }
+        this.sharedDataSingleton.initSharedDataSingleton(this.player);
+        this.player = this.sharedDataSingleton.getPlayer();
         this.generateMaps();
         while (this.player.getLife() > 0) {
-            movePlayer();
+            this.playerActionTurn();
         }
     }
 
@@ -76,6 +76,34 @@ public class GameHandler {
         this.worldMap = new int[][]{{1, 1, 1, 1}, {1, 1, 1, 1}, {1, 1, 2, 1}, {1, 1, 1, 1}};
         this.playerCoordX = 3;
         this.playerCoordY = 2;
+    }
+
+    /**
+     * Each time player must choose a move
+     */
+    public void playerActionTurn() {
+        System.out.println("Please select an option.");
+        System.out.println("1. Move");
+        System.out.println("2. Menu");
+        int playerChoice = UserInputHandler.getUserIntInput(new ArrayList<>(Arrays.asList(1, 2)));
+        switch (playerChoice) {
+            case 1:
+                this.movePlayer();
+                break;
+            case 2:
+                this.gameMenu();
+                break;
+        }
+    }
+
+    public void gameMenu() {
+        System.out.println("1. Show Map");
+        int playerChoice = UserInputHandler.getUserIntInput(new ArrayList<>(Arrays.asList(1)));
+        switch (playerChoice) {
+            case 1:
+                this.showMapToPlayer();
+                break;
+        }
     }
 
     /**
@@ -105,35 +133,13 @@ public class GameHandler {
     }
 
     /**
-     * Process user input
-     * 
-     * @return
-     */
-    public int handleUserInput() {
-        ArrayList<Integer> directions = this.getPossibleDirections();
-        int userChoice = -1;
-        do {
-            if (this.scanner.hasNextInt()) {
-                userChoice = this.scanner.nextInt();
-                if (!directions.contains(userChoice)) {
-                    System.out.println("There is nothing to explore here.");
-                }
-            } else {
-                System.out.println("This is not a valid direction.");
-                this.scanner.next();
-            }
-        } while (!directions.contains(userChoice));
-        return userChoice;
-    }
-
-    /**
      * Move the player on the map
      * Update his coordinates
      * Launch the associated event
      */
     public void movePlayer() {
         System.out.println("Where do you want to go ?");
-        int userChoice = this.handleUserInput();
+        int userChoice = UserInputHandler.getUserIntInput(this.getPossibleDirections());
         switch (userChoice) {
             case 1:
                 this.playerCoordX--;
@@ -149,6 +155,25 @@ public class GameHandler {
                 break;
         }
         this.setupEventOnPlayerMove();
+    }
+
+    /**
+     * Show map to player
+     */
+    public void showMapToPlayer() {
+        System.out.println("You're actually here :\n");
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < this.worldMap.length; i++) {
+            for (int j = 0; j < this.worldMap[i].length; j++) {
+                if (i == this.playerCoordX && j == this.playerCoordY) {
+                    sb.append(" O ");
+                } else {
+                    sb.append(" X ");
+                }
+            }
+            sb.append("\n");
+        }
+        System.out.println(sb);
     }
 
     /**
@@ -177,7 +202,7 @@ public class GameHandler {
         int rdnNumber = new Random().nextInt(10);
         if (rdnNumber > 5) {
             Monster enemy = MonsterFactory.generateMonster();
-            this.iFightHandler.fightProcess(this.player, enemy, this.scanner);
+            this.iFightHandler.fightProcess(this.player, enemy);
             this.worldMap[this.playerCoordX][this.playerCoordY] = -1;
         } else {
             System.out.println("Everything seems peaceful here...");
@@ -189,7 +214,7 @@ public class GameHandler {
      * Map cleared, nothing to be afraid of
      */
     public void nMinus1Event() {
-        System.out.println("Looks like there is nothing more to fight here.");
+        System.out.println("Looks like this place is cleared of all dangers.");
     }
 
     /**
@@ -204,7 +229,7 @@ public class GameHandler {
             System.out.println("1. Visit the Priest");
             System.out.println("2. Visit the Merchant");
             System.out.println("3. Leave the town");
-            int userChoice = this.scanner.nextInt();
+            int userChoice = UserInputHandler.getUserIntInput(new ArrayList(Arrays.asList(1, 2, 3)));
             switch (userChoice) {
                 case 1:
                     Town.visitPriest(this.player);

@@ -4,7 +4,6 @@ import Hero.Hero;
 import Monster.Monster;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class FightHandler implements IFightHandler {
 
@@ -43,15 +42,14 @@ public class FightHandler implements IFightHandler {
      *
      * @param player
      * @param enemy
-     * @param scanner
      */
     @Override
-    public void fightProcess(Hero player, Monster enemy, Scanner scanner) {
+    public void fightProcess(Hero player, Monster enemy) {
         System.out.println("You encounter a savage " + enemy.getName() + " !");
         while (player.getLife() > 0 && enemy.getLife() > 0) {
             boolean validInput = false;
             while (!validInput) {
-                int userChoice = this.handleUserInput(player, scanner);
+                int userChoice = UserInputHandler.getUserIntInput(this.getBattleOptions(player));
                 switch (userChoice) {
                     case 1:
                         validInput = player.attack(enemy);
@@ -69,31 +67,7 @@ public class FightHandler implements IFightHandler {
                 enemy.attack(player);
             }
         }
-        this.fightTermination(player, enemy, scanner);
-    }
-
-    /**
-     * Process user input
-     *
-     * @param player
-     * @param scanner
-     * @return
-     */
-    public int handleUserInput(Hero player, Scanner scanner) {
-        ArrayList<Integer> actions = this.getBattleOptions(player);
-        int userChoice = -1;
-        do {
-            if (scanner.hasNextInt()) {
-                userChoice = scanner.nextInt();
-                if (!actions.contains(userChoice)) {
-                    System.out.println("This is not a valid action.");
-                }
-            } else {
-                System.out.println("This is not a valid choice.");
-                scanner.next();
-            }
-        } while (!actions.contains(userChoice));
-        return userChoice;
+        this.fightTermination(player, enemy);
     }
 
     /**
@@ -102,7 +76,7 @@ public class FightHandler implements IFightHandler {
      * @param player
      */
     public void decreaseCooldowns(Hero player) {
-        if (player.getWeapon().getCurrentSkillCooldown() > 0) {
+        if (player.getWeapon() != null && player.getWeapon().getCurrentSkillCooldown() > 0) {
             player.getWeapon().setCurrentSkillCooldown(player.getWeapon().getCurrentSkillCooldown() - 1);
         }
     }
@@ -111,15 +85,14 @@ public class FightHandler implements IFightHandler {
      * Resolve the fight
      * @param player
      * @param enemy
-     * @param scanner
      */
-    public void fightTermination(Hero player, Monster enemy, Scanner scanner) {
+    public void fightTermination(Hero player, Monster enemy) {
         if (player.getLife() > 0) {
             System.out.println("Death of the " + enemy.getName() + " gives you " + enemy.getXpGain() + " experience and " + enemy.getGoldGain() + " golds.");
             player.setGold(player.getGold() + enemy.getGoldGain());
             player.setCurrentXp(player.getCurrentXp() + enemy.getXpGain());
             if (player.getCurrentXp() >= player.getToNextLevel()) {
-                this.iHeroHandler.levelUp(player, scanner);
+                this.iHeroHandler.levelUp(player);
             }
         } else {
             System.out.println("\nYou lost. Game over.");

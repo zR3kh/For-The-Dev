@@ -207,7 +207,11 @@ public class Hero {
     }
 
     public Weapon getWeapon() {
-        return weapon;
+        if (this.weapon != null) {
+            return weapon;
+        } else {
+            return null;
+        }
     }
 
     public void setWeapon(Weapon weapon) {

@@ -19,10 +19,11 @@ public class Monster {
     public SharedDataSingleton sharedDataSingleton;
     public Hero player;
 
+
     public Monster() {
         this.sharedDataSingleton = SharedDataSingleton.getInstance();
         this.player = this.sharedDataSingleton.getPlayer();
-        this.setLevel(this.player.getLevel());
+        this.level = this.player.getLevel();
     }
 
     public void attack(Hero player) {

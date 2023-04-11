@@ -42,7 +42,7 @@ public class UserInputHandler {
             } else {
                 userChoice = scanner.nextLine();
             }
-        } while (scanner.hasNextLine());
+        } while (userChoice.equals(""));
 
         return userChoice;
     }
