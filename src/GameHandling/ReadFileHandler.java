@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public class ReadFileHandler {
 
-    public static String file = "src/Introduction.txt";
+    public static String file = "./Introduction.txt";
 
     /**
      * Game dialogue introduction
