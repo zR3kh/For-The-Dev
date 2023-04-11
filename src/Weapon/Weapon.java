@@ -107,4 +107,12 @@ public abstract class Weapon {
     public int getDamage() {
         return damage;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

@@ -4,7 +4,7 @@ import Weapon.Staff.Staff;
 
 public class AshStaff extends Staff {
 
-    public AshStaff(String name, int damage) {
+    public AshStaff() {
         super("Ash Staff", 2);
     }
 }

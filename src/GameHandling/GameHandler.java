@@ -220,7 +220,7 @@ public class GameHandler {
      */
     public void n1Event() {
         int rdnNumber = new Random().nextInt(10);
-        if (rdnNumber > 5) {
+        if (rdnNumber > 0) {
             Monster enemy = MonsterFactory.generateMonster();
             this.iFightHandler.fightProcess(this.player, enemy);
             this.worldMap[this.playerCoordX][this.playerCoordY] = -1;
